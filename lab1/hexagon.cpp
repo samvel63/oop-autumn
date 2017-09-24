@@ -24,7 +24,7 @@ Hexagon::Hexagon(const Hexagon& orig)
 
 double Hexagon::Square()
 {
-	return (3 * sqrt(3) * double(side) * double(side)) / 2;
+	return (3.0 * sqrt(3.0) * double(side) * double(side)) / 2.0;
 }
 
 void Hexagon::Print() 
