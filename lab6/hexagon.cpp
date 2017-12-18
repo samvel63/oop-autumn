@@ -39,7 +39,7 @@ void Hexagon::Print()
 
 Hexagon::~Hexagon()
 {
-	std::cout << "Hexagon deleted" << std::endl;
+	//std::cout << "Hexagon deleted" << std::endl;
 }
 
 Hexagon& Hexagon::operator=(const Hexagon& right)
@@ -61,12 +61,14 @@ Hexagon& Hexagon::operator++()
     return *this;
 }
 
-Hexagon operator+(const Hexagon& left,const Hexagon& right) {
+Hexagon operator+(const Hexagon& left,const Hexagon& right)
+{
     return Hexagon(left.side + right.side);
 }
 
 
-std::ostream& operator<<(std::ostream& os, const Hexagon& obj) {
+std::ostream& operator<<(std::ostream& os, const Hexagon& obj)
+{
     os << "Side = " << obj.side << std::endl;
     return os;
 }
@@ -77,6 +79,17 @@ std::istream& operator>>(std::istream& is, Hexagon& obj)
     return is;
 }
 
-bool operator==(const Hexagon& left, const Hexagon& right) {
+bool operator==(const Hexagon& left, const Hexagon& right)
+{
     return left.side == right.side;
+}
+
+bool operator>(const Hexagon& left, const Hexagon& right)
+{
+    return left.side > right.side;
+}
+
+bool operator<(const Hexagon& left, const Hexagon& right)
+{
+    return left.side < right.side;
 }

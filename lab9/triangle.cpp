@@ -26,6 +26,17 @@ Triangle::Triangle(const Triangle& orig)
 	side_c = orig.side_c;
 }
 
+int32_t Triangle::Side()
+{
+    if (side_a >= side_b && side_a >= side_c) {
+        return side_a;
+    } else if (side_b >= side_a && side_b >= side_c) {
+        return side_b;
+    } else {
+        return side_c;
+    }
+}
+
 double Triangle::Square()
 {
 	double p = double(side_a + side_b + side_c) / 2.0;
@@ -40,12 +51,12 @@ std::ostream& operator<<(std::ostream& os, const Triangle& obj)
 
 void Triangle::Print() 
 {
-	std::cout << "Side_A = " << side_a << ", Side_B = " << side_b << ", SIDE_C = " << side_c << std::endl;
+	std::cout << "Side_A = " << side_a << ", Side_B = " << side_b << ", Side_C = " << side_c << std::endl;
 }
 
 Triangle::~Triangle()
 {
-	std::cout << "Triangle deleted" << std::endl;
+	//std::cout << "Triangle deleted" << std::endl;
 }
 
 Triangle& Triangle::operator=(const Triangle& right)
@@ -66,17 +77,9 @@ Triangle& Triangle::operator++()
     return *this;
 }
 
-Triangle operator+(const Triangle& left,const Triangle& right) {
+Triangle operator+(const Triangle& left,const Triangle& right)
+{
     return Triangle(left.side_a+right.side_a,left.side_b+right.side_b,left.side_c+right.side_c);
-}
-
-Triangle::~Triangle() {
-std::cout << "Triangle deleted" << std::endl;
-}
-
-std::ostream& operator<<(std::ostream& os, const Triangle& obj) {
-    os << "a=" << obj.side_a << ", b=" << obj.side_b << ", c=" << obj.side_c << std::endl;
-    return os;
 }
 
 std::istream& operator>>(std::istream& is, Triangle& obj)
@@ -85,4 +88,27 @@ std::istream& operator>>(std::istream& is, Triangle& obj)
     is >> obj.side_b;
     is >> obj.side_c;
     return is;
+}
+
+bool operator==(const Triangle& left, const Triangle& right)
+{
+    return (left.side_a == right.side_a) &&
+           (left.side_b == right.side_b) &&
+           (left.side_c == right.side_c);
+}
+
+bool operator>(const Triangle& left, const Triangle& right)
+{
+
+    return (left.side_a > right.side_a) ||
+           (left.side_a == right.side_a && left.side_b > right.side_b) ||
+           (left.side_a == right.side_a && left.side_b == right.side_b && left.side_c > right.side_c);
+}
+
+bool operator<(const Triangle& left, const Triangle& right)
+{
+
+    return (left.side_a < right.side_a) ||
+           (left.side_a == right.side_a && left.side_b < right.side_b) ||
+           (left.side_a == right.side_a && left.side_b == right.side_b && left.side_c < right.side_c);
 }

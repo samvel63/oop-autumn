@@ -1,5 +1,6 @@
+#include <iostream>
 #include <cstdlib>
-#include <cstring>
+//#include <cstring>
 #include "triangle.h"
 #include "hexagon.h"
 #include "octagon.h"
@@ -66,15 +67,12 @@ int main(int argc, char** argv)
         } else if (!strcmp(s, "quit") || !strcmp(s, "exit") || !strcmp(s, "q")) {
             if (ptr_tr != nullptr) {
                 delete ptr_tr;
-                std::cout << "Triangle deleted " << std::endl;
             }
             if (ptr_hex != nullptr) {
                 delete ptr_hex;
-                std::cout << "Hexagon deleted " << std::endl;
             }
             if (ptr_oct != nullptr) {
                 delete ptr_oct;
-                std::cout << "Octagon deleted " << std::endl;
             }
             break;
         } else if (!strcmp(s, "help") || !strcmp(s, "h")) {

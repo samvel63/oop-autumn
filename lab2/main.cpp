@@ -25,6 +25,7 @@ int main(int argc, char** argv)
                 continue;
             }
             tree->insert(Hexagon(side));
+            //std::cout << "Vertex add." << std::endl;
         } else if (!strcmp(s, "remove") || !strcmp(s, "rm")) {
             int32_t side;
             if (!(std::cin >> side)) {
@@ -32,6 +33,7 @@ int main(int argc, char** argv)
                 continue;
             }
             tree->remove(side);
+            //std::cout << "Vertex add." << std::endl;
         } else if (!strcmp(s, "find") || !strcmp(s, "f")) {
             if (tree->empty()) {
                 std::cout << "Tree is empty." << std::endl;
@@ -62,11 +64,11 @@ int main(int argc, char** argv)
             delete tree;
             break;
         } else if (!strcmp(s, "help") || !strcmp(s, "h")) {
-            std::cout << "Commands 'insert' and 'ins' create new triagle with your parameters." << std::endl;
-            std::cout << "Commands 'remove' and 'rm' create new hexagon with your parameters." << std::endl;
-            std::cout << "Commands 'find' and 'f' create new octagon with your parameters." << std::endl;
-            std::cout << "Commands 'destroy' and 'd' output parameters of triagle." << std::endl;
-            std::cout << "Commands 'print' and 'pr' output parameters of hexagon."  << std::endl;
+            std::cout << "Commands 'insert' and 'ins' create new hexagon in bintree." << std::endl;
+            std::cout << "Commands 'remove' and 'rm' remove hexagon in bintree." << std::endl;
+            std::cout << "Commands 'find' and 'f' find hexagon with your side." << std::endl;
+            std::cout << "Commands 'destroy' and 'd' destroy bintree." << std::endl;
+            std::cout << "Commands 'print' and 'pr' print bintree."  << std::endl;
             std::cout << "Commands 'quit' and 'q' exit the program." << std::endl;
         }
     }

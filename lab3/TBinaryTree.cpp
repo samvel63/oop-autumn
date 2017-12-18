@@ -9,15 +9,15 @@ TBinaryTree::TBinaryTree() {
 }
 
 
-TBinaryTreeItem* TBinaryTree::find(int32_t a)
+std::shared_ptr<TBinaryTreeItem> TBinaryTree::find(std::shared_ptr<Figure> &obj)
 {
-    TBinaryTreeItem* item = head;
+    std::shared_ptr<TBinaryTreeItem> item = head;
     while (item != nullptr) {
-        if (item->Side() == a) {
+        if (item->item->Side() == obj->Side()) {
             return item;
-        } else if (item->Side() > a) {
+        } else if (item->item->Side() > obj->Side()) {
             item = item->left;
-        } else if (item->Side() < a) {
+        } else if (item->item->Side() < obj->Side()) {
             item = item->right;
         }
     }
@@ -25,9 +25,9 @@ TBinaryTreeItem* TBinaryTree::find(int32_t a)
 }
 
 
-TBinaryTreeItem* TBinaryTree::minValueNode(TBinaryTreeItem* root)
+std::shared_ptr<TBinaryTreeItem> TBinaryTree::minValueNode(std::shared_ptr<TBinaryTreeItem> root)
 {
-    TBinaryTreeItem* min = root;
+     std::shared_ptr<TBinaryTreeItem> min = root;
  
     while (min->left != nullptr) {
         min = min->left;
@@ -36,65 +36,63 @@ TBinaryTreeItem* TBinaryTree::minValueNode(TBinaryTreeItem* root)
     return min;
 }
 
-TBinaryTreeItem* TBinaryTree::deleteNode(TBinaryTreeItem* root, int32_t a)
+std::shared_ptr<TBinaryTreeItem> TBinaryTree::deleteNode(std::shared_ptr<TBinaryTreeItem> root, int32_t side)
 {
     if (root == nullptr) {
         return root;
     }
  
-    if (a < root->Side()) {
-        root->left = deleteNode(root->left, a);
-    } else if (a > root->Side()) {
-        root->right = deleteNode(root->right, a);
+    if (side < root->item->Side()) {
+        root->left = deleteNode(root->left, side);
+    } else if (side > root->item->Side()) {
+        root->right = deleteNode(root->right, side);
     } else {
         if (root->left == nullptr) {
-            TBinaryTreeItem *temp = root->right;
+            std::shared_ptr<TBinaryTreeItem> temp = root->right;
             root->left = nullptr;
             root->right = nullptr;
-            delete root;
             return temp;
         } else if (root->right == nullptr) {
-            TBinaryTreeItem *temp = root->left;
+            std::shared_ptr<TBinaryTreeItem> temp = root->left;
             root->left = nullptr;
             root->right = nullptr;
-            delete root;
             return temp;
         }
- 
-        TBinaryTreeItem* temp = minValueNode(root->right);
-        root->hexagon = temp->hexagon;
-        root->right = deleteNode(root->right, temp->Side());
+    
+        std::shared_ptr<TBinaryTreeItem> temp = minValueNode(root->right);
+        root->item = temp->item;
+        root->right = deleteNode(root->right, temp->item->Side());
     }
     return root;
 }
 
 
-void TBinaryTree::remove(int32_t a)
+void TBinaryTree::remove(int32_t side)
 {
-    head = TBinaryTree::deleteNode(head, a);
+    head = TBinaryTree::deleteNode(head, side);
 
 }
 
-void TBinaryTree::insert(Hexagon &&hexagon)
+void TBinaryTree::insert(std::shared_ptr<Figure> &obj)
 {
     if (head == nullptr) {
-        head = new TBinaryTreeItem(hexagon);
+        head = std::make_shared<TBinaryTreeItem>(obj);
         return;
     }
 
 
-    TBinaryTreeItem* item = head;
+    std::shared_ptr<TBinaryTreeItem> item = head;
     while (true) {
-        if (hexagon.Side() <= item->Side()) {
+        if (obj->Side() <= item->item->Side()) {
             if (item->left == nullptr) {
-                item->left = new TBinaryTreeItem(hexagon);
+                item->left = std::make_shared<TBinaryTreeItem>(obj);
                 break;
             } else {
                 item = item->left;
             }
         } else {
             if (item->right == nullptr) {
-                item->right = new TBinaryTreeItem(hexagon);
+                item->right = std::make_shared<TBinaryTreeItem>(obj);
                 break;
             } else {
                 item = item->right;
@@ -103,12 +101,12 @@ void TBinaryTree::insert(Hexagon &&hexagon)
     }
 }
 
-void TBinaryTree::print_tree(TBinaryTreeItem* item, int32_t a, std::ostream& os)
+void TBinaryTree::print_tree(std::shared_ptr<TBinaryTreeItem> item, int32_t a, std::ostream& os)
 {
     for (int32_t i = 0; i < a; i++) {
         os << "  ";
     }
-    os << item->Side() << std::endl;
+    item->GetFigure()->Print();
     if (item->left != nullptr) {
         TBinaryTree::print_tree(item->left, a + 1, os);
     } else if (item->right != nullptr) {
@@ -151,7 +149,6 @@ bool TBinaryTree::empty()
 
 TBinaryTree::~TBinaryTree()
 {
-    delete head;
 }
 
 
